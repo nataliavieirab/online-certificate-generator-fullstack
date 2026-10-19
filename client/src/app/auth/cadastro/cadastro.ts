@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
-import { PaginaAutenticacao } from '../pagina-autenticacao';
+import { afterNextRender, Component, ElementRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideArrowRight } from '@lucide/angular';
+import { AuthShell } from '../auth-shell';
 
 @Component({
-  imports: [LucideArrowRight, PaginaAutenticacao, RouterLink],
+  imports: [LucideArrowRight, AuthShell, RouterLink],
   selector: 'app-cadastro',
   templateUrl: './cadastro.html',
 })
-export class Cadastro {}
+export class Cadastro {
+  private readonly tituloPagina = viewChild<ElementRef<HTMLHeadingElement>>('tituloPagina');
+
+  constructor() {
+    afterNextRender(() => this.tituloPagina()?.nativeElement.focus());
+  }
+}
